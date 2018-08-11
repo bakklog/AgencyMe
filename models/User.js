@@ -9,12 +9,19 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     avatar: String,
     password: {
         type: String,
         required: true
+    },
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    status: {
+        type: String,
+        default: "Inactive"
     },
     date: {
         type: Date,

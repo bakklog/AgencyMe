@@ -4,6 +4,29 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const mjmltohtml = require('mjml');
+const nodemailer = require('nodemailer');
+const sgTransport = require('nodemailer-sendgrid-transport');
+
+// Sendgrid authentication
+const sgAuth = {
+    auth: {
+        api_user: 'process.env.SENDGRID_USERNAME',
+        api_key: 'process.env.SENDGRID_PASSWORD'
+    }
+}
+const sgMailer = nodemailer.createTransport(sgTransport(sgAuth));
+
+
+
+// sgMailer.sendMail(email, function(err, info) {
+    // if (err) {
+        // console.log(errors);
+    // }
+    // else {
+        // console.log('Message sent: ' + info.response);
+    // }
+// });
 
 // Load input validation
 const validateRegisterInput = require('../../validation/register');
@@ -39,6 +62,7 @@ router.post('/register', (req, res) => {
             errors.email = 'An unknown error has occurred. Please try again.'
             return res.status(400).json(errors);
         } else {
+            
             const avatar = gravatar.url(req.body.email, {
                 s: '200', // Size
                 r: 'pg', // Rating 
@@ -65,6 +89,7 @@ router.post('/register', (req, res) => {
         }
     });
 });
+
 /**
  * @route   POST api/login
  * @desc    Login a user and return JWT
@@ -112,6 +137,13 @@ router.post('/login', (req,res) =>{
 });
 
 /**
+ * @route   POST api/users/reset/:token
+ * @desc    Process the reset password request
+ * @access  Public
+ */
+router.post('/')
+
+/**
  * @route   GET api/users/current
  * @desc    Return current user
  * @access  Private
@@ -124,4 +156,4 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
     });
 });
 
-module.exports = router
+module.exports = router;

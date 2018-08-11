@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 
 // API routes
 const users = require('./routes/api/users');
-// const profile = require('./routes/api/profiles');
+const profile = require('./routes/api/profile');
 // const invoices = require('./routes/api/users/invoices');
 // const domains = require('./routes/api/users/domains');
 
@@ -59,7 +59,7 @@ require('./config/passport')(passport);
 
 // Routes
 app.use('/api/users', users);
-// app.use('/api/profile', profile);
+app.use('/api/profile', profile);
 
 app.listen(app.get('port'), () => {
     console.log(`${chalk.green('✓')} App is running at http://localhost:${app.get('port')} in ${app.get('env')} mode`);
