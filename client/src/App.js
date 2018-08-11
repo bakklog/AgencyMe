@@ -16,7 +16,7 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login'
 import Dashboard from './components/dashboard/Dashboard';
-import Profiles from './components/profiles/Profiles';
+// import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import NotFound from './components/not-found/NotFound';
 
@@ -47,19 +47,21 @@ class App extends Component {
   render() {
     return (
       <Provider store ={store}>
-        <div className='App'>
-        <Navbar />
-        <Route exact path='/' component={Landing} />
-        <div className='container'>
-          <Route exact path='/register' component={Register} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/profiles' component={Profiles} />
-          <Route exact path='/profile/:handle' component={Profile} />
-          <Switch>
-            <PrivateRoute exact path='/dashboard' component={Dashboard} />
-          </Switch>
-        </div>
-        </div>
+          <Router>
+          <div className='App'>
+          <Navbar />
+          <Route exact path='/' component={Landing} />
+          <div className='container'>
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/login' component={Login} />
+            {/* <Route exact path='/profiles' component={Profiles} /> */}
+            <Route exact path='/profile/:handle' component={Profile} />
+            <Switch>
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            </Switch>
+          </div>
+          </div>
+        </Router>
       </Provider>
     );
   }
