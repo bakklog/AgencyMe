@@ -16,6 +16,7 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login'
 import Dashboard from './components/dashboard/Dashboard';
+import CreateProfile from './components/create-profile/CreateProfile';
 // import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import NotFound from './components/not-found/NotFound';
@@ -51,15 +52,20 @@ class App extends Component {
           <div className='App'>
           <Navbar />
           <Route exact path='/' component={Landing} />
-          <div className='container'>
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/login' component={Login} />
-            {/* <Route exact path='/profiles' component={Profiles} /> */}
-            <Route exact path='/profile/:handle' component={Profile} />
-            <Switch>
-              <PrivateRoute exact path='/dashboard' component={Dashboard} />
-            </Switch>
-          </div>
+            <div className='container'>
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+              {/* <Route exact path='/profiles' component={Profiles} /> */}
+              <Route exact path='/profile/:handle' component={Profile} />
+              <Switch>
+                <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path='/create-profile' component={CreateProfile} />
+              </Switch>
+              <Route exact path='/not-found' component={NotFound} />
+            </div>
+            <Footer />
           </div>
         </Router>
       </Provider>

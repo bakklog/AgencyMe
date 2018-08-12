@@ -13,7 +13,7 @@ class Landing extends Component {
                 <h1 className="display-3 mb-4">Agency Manger
                 </h1>
                 <p className="lead"> Leverage agile frameworks to provide a robust synopsis for high level overviews. </p>
-                    <Link className="btn btn-lg btn-info mr-2" to="/signup">Sign Up</Link>
+                    <Link className="btn btn-lg btn-info mr-2" to="/register">Sign Up</Link>
                     <Link className="btn btn-lg btn-dark" to="/login">Login</Link>
               </div>
               </div>

@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
+import ProfileGithub from './ProfileGithub';
 import Spinner from '../common/Spinner';
 import { getProfileByHandle } from '../../actions/profileActions';
 
 class Profile extends Component {
     componentDidMount() {
-        if (this.props.amtch.params.handle) {
+        if (this.props.match.params.handle) {
             this.props.getProfileByHandle(this.props.match.params.handle);
         }
     }
@@ -30,7 +31,7 @@ class Profile extends Component {
         } else {
             profileContent = (
                 <div>
-                    <div clasName="row">
+                    <div className="row">
                         <div className="col-md-6">
                             <Link to="/profiles" className="btn btn-light mb-3 float-left">
                                 Back to profiles
@@ -40,6 +41,9 @@ class Profile extends Component {
                     </div>
                     <ProfileHeader profile={profile} />
                     <ProfileAbout profile={profile} />
+                    {profile.githubusername ? (
+                        <ProfileGithub username={profile.githubusername} />
+                    ) : null}
                 </div>
             );
         }

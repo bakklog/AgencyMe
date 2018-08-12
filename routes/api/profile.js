@@ -57,7 +57,6 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
     // Get fields
     const profileFields = {};
     profileFields.user = req.user.id;
-    // TODO: Default ID as handle when no specified
     if(req.body.handle) profileFields.handle = req.body.handle;
     if(req.body.company) profileFields.company = req.body.company;
     if(req.body.position) profileFields.position = req.body.position;
@@ -70,7 +69,11 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
     Profile.findOne({ user: req.user.id }).then(profile => {
         if (profile) {
             // Update
-            Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true }).then(profile => res.json(profile));
+            Profile.findOneAndUpdate(
+                { user: req.user.id }, 
+                { $set: profileFields }, 
+                { new: true }
+            ).then(profile => res.json(profile));
         } else {
             // Create
 
@@ -86,6 +89,27 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
             });
         }
     });
+});
+
+/**
+ * @route   GET api/profile/handle/:handle
+ * @desc    Get profile by handle
+ * @access  Public
+ */
+router.get('/handle/:handle', (req, res) => {
+    const errors = {};
+
+    Profile.findOne({ handle: req.params.handle })
+        .populate('user', ['name', 'avatar'])
+        .then(profile => {
+            if (!profile) {
+                errors.noprofile = 'There is no profile for this user';
+                res.status(404).json(errors);
+            }
+        
+            res.json(profile);
+        })
+        .catch(err => res.status(404).json(err));
 });
 
 /**
